@@ -1,15 +1,18 @@
 import React from 'react';
-
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Landing from './pages/Landing';
+import PetzMap from './pages/PetzMap';
 
-export default function Routes() {
+const Router = () => {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path='/' exact component={Landing} />
-      </Switch>
+      <Routes>
+        <Route path='/' element={<Landing />} />
+        <Route path='/app' element={<PetzMap />} />
+      </Routes>
     </BrowserRouter>
   );
-}
+};
+
+export default Router;

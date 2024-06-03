@@ -1,11 +1,8 @@
 #page-landing {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(329.54deg, #f6f4ed 0%, #dfdcd5 100%);
-
   padding-top: 40px;
   padding-bottom: 40px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,29 +10,35 @@
 
 .content-wrapper {
   position: relative;
-
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
   height: 100%;
   max-height: 680px;
   margin: 0 auto;
-
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   justify-content: space-between;
 }
 
+.content-wrapper main {
+  margin-bottom: 156px;
+}
+
+.content-wrapper .logo {
+  width: 258px;
+}
+
 .content-wrapper h1 {
-  max-width: 350px;
+  max-width: 552px;
   font-size: 76px;
   font-weight: 900;
   line-height: 70px;
 }
 
 .content-wrapper p {
-  max-width: 350px;
-  margin-top: 40px;
+  /* max-width: 350px; */
+  margin-top: 20px;
   font-family: 'Nunito';
   font-size: 24px;
   line-height: 34px;
@@ -45,14 +48,23 @@
   position: absolute;
   right: 0px;
   top: 0px;
-
-  font-size: 24px;
+  font-size: 20px;
   line-height: 34px;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  text-align: right;
+}
 
+.content-wrapper .location .local {
   display: flex;
   flex-direction: column;
+}
 
-  text-align: right;
+.content-wrapper .location button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .content-wrapper .location strong {
@@ -63,19 +75,61 @@
   position: absolute;
   right: 0px;
   bottom: 0px;
-
   width: 80px;
   height: 80px;
-  background: #ffd666;
   border-radius: 30px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   transition: background-color 0.2s;
 }
 
 .content-wrapper .enter-app:hover {
-  background: #96feff;
+  background: #ffd6aa;
+}
+
+/* Estilos para light mode */
+body.light-mode #page-landing {
+  background: linear-gradient(329.54deg, #fafafa 0%, #cccccc 100%);
+}
+
+body.light-mode .content-wrapper {
+  background: url('../../assets/landing/landing-ilustra-light.svg') no-repeat
+    90% center;
+  color: #4d4855;
+}
+
+body.light-mode .location button {
+  color: #4d4855;
+}
+
+body.light-mode .content-wrapper .enter-app {
+  background-color: #ca322a;
+}
+
+body.light-mode .content-wrapper .enter-app:hover {
+  background-color: #e6c1c2;
+}
+
+/* Estilos para dark mode */
+body.dark-mode #page-landing {
+  background: linear-gradient(329.54deg, #4d4855 0%, #4d4855 100%);
+}
+
+body.dark-mode .content-wrapper {
+  background: url('../../assets/landing/landing-ilustra-dark.svg') no-repeat 90%
+    center;
+  color: white;
+}
+
+body.dark-mode .location button {
+  color: rgba(225, 225, 255, 1);
+}
+
+body.dark-mode .content-wrapper .enter-app {
+  background-color: #ffd666;
+}
+
+body.dark-mode .content-wrapper .enter-app:hover {
+  background-color: #fae3a4;
 }
