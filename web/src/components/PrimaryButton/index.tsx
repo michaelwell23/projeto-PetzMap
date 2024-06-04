@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react';
 
-import './styles';
+import './styles.css';
 
 interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const PrimaryButton = ({ children, ...props }: PrimaryButtonProps) => {
   return (
     <>
-      <button className='primary-buttom' {...props}>
+      <button className='primary-button' {...props}>
         {children}
       </button>
     </>

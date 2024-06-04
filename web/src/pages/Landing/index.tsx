@@ -1,9 +1,10 @@
 /// <reference path="../../../react-app-env.d.ts" />
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FaArrowRight, FaSun, FaMoon } from 'react-icons/fa';
-
 import { Link } from 'react-router-dom';
+
+import { useTheme } from 'context/ThemeContext';
 
 import logoLight from '../../assets/logo/logo-light.png';
 import logoDark from '../../assets/logo/logo-dark.png';
@@ -11,27 +12,13 @@ import logoDark from '../../assets/logo/logo-dark.png';
 import './styles.css';
 
 const Landing = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add('light-mode');
-      document.body.classList.remove('dark-mode');
-    } else {
-      document.body.classList.add('dark-mode');
-      document.body.classList.remove('light-mode');
-    }
-  }, [isDarkMode]);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+  const { isDarkMode, toggleTheme } = useTheme();
 
   return (
-    <div id='page-landing'>
+    <div id='page-landing' className={isDarkMode ? 'dark-mode' : 'light-mode'}>
       <div className='content-wrapper'>
         <img
-          src={isDarkMode ? logoLight : logoDark}
+          src={isDarkMode ? logoDark : logoLight}
           alt='Logo'
           className='logo'
         />
@@ -49,15 +36,19 @@ const Landing = () => {
 
           <button onClick={toggleTheme}>
             {isDarkMode ? (
-              <FaMoon size={26} color='rgba(0, 0, 0, 0.6)' />
+              <FaMoon size={26} color='rgba(225, 225, 255, 1)' />
             ) : (
-              <FaSun size={26} color='rgba(225, 225, 255, 1)' />
+              <FaSun size={26} color='rgba(0, 0, 0, 0.6)' />
             )}
           </button>
         </div>
 
         <Link to='/app' className='enter-app'>
-          <FaArrowRight size={26} color='rgba(225, 225, 255, 1)' />
+          {isDarkMode ? (
+            <FaArrowRight size={26} color='rgba(0, 0, 0, 0.6)' />
+          ) : (
+            <FaArrowRight size={26} color='rgba(225, 225, 255, 1)' />
+          )}
         </Link>
       </div>
     </div>

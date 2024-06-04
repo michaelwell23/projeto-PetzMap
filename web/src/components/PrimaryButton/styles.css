@@ -1,0 +1,42 @@
+button.primary-button {
+  margin-top: 64px;
+
+  width: 100%;
+  height: 64px;
+  border: 0;
+
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: 800;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: background-color 0.2s;
+}
+
+button.primary-button svg {
+  margin-right: 16px;
+}
+
+/* Modo Light */
+body.light-mode button.primary-button {
+  background-color: #ca322a;
+  color: #fff;
+}
+
+body.light-mode button.primary-button:hover {
+  background-color: #fa848a;
+}
+
+/* Modo Dark */
+
+body.dark-mode button.primary-button {
+  background-color: #ffd666;
+  color: #000;
+}
+
+body.dark-mode button.primary-button:hover {
+  background-color: #fae3a4;
+}

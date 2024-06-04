@@ -1,33 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import L from 'leaflet';
 import { Marker, Popup, TileLayer } from 'react-leaflet';
 import { FiArrowRight, FiPlus, FiArrowLeft } from 'react-icons/fi';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
+import { useTheme } from 'context/ThemeContext';
+
 import Map from 'components/Map';
 import mapMarketImg from '../../assets/MapMarket/mapIcon-light.png';
-import location from '../../assets/MapMarket/location.png';
+import locationLight from '../../assets/MapMarket/location-light.png';
+import locationDark from '../../assets/MapMarket/location-dark.png';
 
 import './styles.css';
 
-const locationIcon = L.icon({
-  iconUrl: location,
-  iconSize: [58, 58],
-  iconAnchor: [29, 68],
-  popupAnchor: [170, 2],
-});
+const getLocationIcon = (isDarkMode: boolean) => {
+  const iconUrl = isDarkMode ? locationDark : locationLight;
+
+  return L.icon({
+    iconUrl: iconUrl,
+    iconSize: [58, 58],
+    iconAnchor: [29, 68],
+    popupAnchor: [170, 2],
+  });
+};
 
 const PetzMap = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isDarkMode, toggleTheme } = useTheme();
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
-  useEffect(() => {
-    document.body.className = isDarkMode ? 'dark-mode' : 'light-mode';
-  }, [isDarkMode]);
+  const locationIcon = getLocationIcon(isDarkMode);
 
   return (
     <div id='page-map' className={isDarkMode ? 'dark-mode' : 'light-mode'}>
@@ -87,15 +88,23 @@ const PetzMap = () => {
             className='map-popup'
           >
             Cachorro Caramelo
-            <Link to={`/create/1`}>
-              <FiArrowRight size={20} color='#fff' />
+            <Link to={`/pet/1`}>
+              {isDarkMode ? (
+                <FiArrowRight size={20} color='rgba(0, 0, 0, 0.6)' />
+              ) : (
+                <FiArrowRight size={20} color='rgba(225, 225, 255, 1)' />
+              )}
             </Link>
           </Popup>
         </Marker>
       </Map>
 
-      <Link to='/create' className='register-pet'>
-        <FiPlus size={32} color='#FFF' />
+      <Link to='/registration-pets' className='register-pet'>
+        {isDarkMode ? (
+          <FiPlus size={32} color='rgba(0, 0, 0, 0.6)' />
+        ) : (
+          <FiPlus size={32} color='rgba(225, 225, 255, 1)' />
+        )}
       </Link>
     </div>
   );
