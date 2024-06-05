@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { Map as LeafletMap, MapProps as LeafletMapProps } from 'react-leaflet';
+import {
+  Map as LeafletMap,
+  MapProps as LeafletMapProps,
+  TileLayer,
+} from 'react-leaflet';
+
+import { useTheme } from 'context/ThemeContext';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -10,7 +16,8 @@ interface MapProps extends LeafletMapProps {
 }
 
 const Map = ({ children, interactive = true, ...props }: MapProps) => {
-  console.log('Mapbox token:', process.env.REACT_APP_MAPBOX_TOKEN);
+  const { isDarkMode } = useTheme();
+
   return (
     <LeafletMap
       center={[-27.2092052, -49.6401092]}
@@ -23,6 +30,13 @@ const Map = ({ children, interactive = true, ...props }: MapProps) => {
       doubleClickZoom={interactive}
       {...props}
     >
+      <TileLayer
+        url={`https://api.mapbox.com/styles/v1/mapbox/${
+          isDarkMode ? 'dark-v10' : 'light-v10'
+        }/tiles/256/{z}/{x}/{y}@2x?access_token=${
+          process.env.REACT_APP_MAPBOX_TOKEN
+        }`}
+      />
       {children}
     </LeafletMap>
   );

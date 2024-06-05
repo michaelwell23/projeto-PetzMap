@@ -95,16 +95,9 @@ form.register-pet-form .input-block .button-select {
 
 form.register-pet-form .input-block .button-select button {
   height: 64px;
-  background: #f5f8fa;
   border: 1px solid #d3e2e5;
   color: #5c8599;
   cursor: pointer;
-}
-
-form.register-pet-form .input-block .button-select button.active {
-  background: #edfff6;
-  border: 1px solid #a1e9c5;
-  color: #37c77f;
 }
 
 form.register-pet-form .input-block .button-select button:first-child {
@@ -131,6 +124,15 @@ body.light-mode form.register-pet-form .input-block textarea {
   background: #f5f8fa;
 }
 
+body.light-mode
+  form.register-pet-form
+  .input-block
+  .button-select
+  button.active {
+  background: #faf5f5;
+  border: 1px solid #e9a1a1;
+}
+
 /* Modo Dark */
 
 body.dark-mode #page-registration-pets main {
@@ -139,7 +141,7 @@ body.dark-mode #page-registration-pets main {
 
 body.dark-mode form.register-pet-form {
   background: #242526;
-  border: 1px solid #18191a;
+  border: 1px solid #666;
 }
 
 body.dark-mode form.register-pet-form fieldset legend {
@@ -162,4 +164,14 @@ body.dark-mode form.register-pet-form .input-block textarea {
 body.dark-mode form.register-pet-form .input-block .new-image {
   background: #3a3b3c;
   border: 1px dashed #fae3a4;
+}
+
+body.dark-mode
+  form.register-pet-form
+  .input-block
+  .button-select
+  button.active {
+  background: #faf9ee;
+  border: 1px solid #e8e9a1;
+  color: #000;
 }
