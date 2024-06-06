@@ -97,10 +97,14 @@ const Pet: React.FC = () => {
                 <p>
                   Vacinas: <span></span>
                 </p>
-                <p>
-                  Comportamento c/ crianças: <span></span>
-                </p>
               </div>
+
+              <p>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum
+                corrupti quae sed suscipit explicabo quisquam officiis dolorem!
+                Itaque qui incidunt ullam est perspiciatis saepe dolorem iste!
+                Hic quis molestiae totam!
+              </p>
 
               <hr />
 
@@ -137,18 +141,15 @@ const Pet: React.FC = () => {
               <hr />
 
               <h2>Informações complementares</h2>
+              <span>Mais infomações sobre a doação</span>
 
               <div className='open-details'>
-                <div className='hour'>
-                  <FiClock size={32} color='#15B6D6' />
-                  Segunda à Sexta <br />
-                  8h às 18h
-                </div>
-                <div className='open-on-weekends'>
-                  <FiInfo size={32} color='#39CC83' />
-                  Atendemos <br />
-                  fim de semana
-                </div>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+                  accusamus quod explicabo tempora dolorem voluptate, deleniti
+                  dignissimos rerum sit officiis enim harum in, accusantium eos
+                  excepturi ut, aperiam architecto cupiditate?
+                </p>
               </div>
 
               <PrimaryButton type='button'>

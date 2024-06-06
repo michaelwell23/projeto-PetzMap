@@ -1,0 +1,63 @@
+.select-block + .select-block {
+  margin-top: 24px;
+}
+
+.select-block label {
+  display: flex;
+  margin-bottom: 8px;
+  line-height: 24px;
+  padding-top: 24px;
+}
+
+.select-block label span {
+  font-size: 14px;
+
+  margin-left: 24px;
+  line-height: 24px;
+}
+
+.select-block select {
+  width: 100%;
+
+  border-radius: 20px;
+  outline: none;
+}
+
+.select-block select {
+  height: 64px;
+  padding: 0 16px;
+}
+
+/* Modo Light */
+
+body.light-mode .select-block label {
+  color: #8fa7b3;
+}
+
+body.light-mode .select-block label span {
+  color: #8fa7b3;
+}
+
+body.light-mode .select-block select {
+  background: #f5f8fa;
+  border: 1px solid #d3e2e5;
+  color: #8fa7b3;
+}
+
+/* Modo Dark */
+body.dark-mode .select-block select {
+  background: #3a3b3c;
+}
+
+body.dark-mode .select-block label {
+  color: #f1dc95;
+}
+
+body.dark-mode .select-block label span {
+  color: #f1dc95;
+}
+
+body.dark-mode .select-block select {
+  border: 1px solid #d3e2e5;
+  color: #eee;
+}

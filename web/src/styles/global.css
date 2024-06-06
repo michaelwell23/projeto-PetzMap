@@ -11,6 +11,7 @@ body {
 
 body,
 input,
+select,
 button,
 textarea {
   font: 600 18px Nunito, sans-serif;

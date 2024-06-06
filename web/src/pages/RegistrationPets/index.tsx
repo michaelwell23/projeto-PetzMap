@@ -1,17 +1,18 @@
 import React from 'react';
-import { Marker, TileLayer } from 'react-leaflet';
+import { Marker } from 'react-leaflet';
 
-import { FiPlus } from 'react-icons/fi';
+import { useTheme } from 'context/ThemeContext';
 
 import PrimaryButton from 'components/PrimaryButton';
 import Sidebar from 'components/Sidebar';
-
-import { useTheme } from 'context/ThemeContext';
+import Input from 'components/Input';
 
 import Map from 'components/Map';
 import getLocationIcon from 'components/Map/petzMapIcon';
 
 import './styles.css';
+import ImageUploader from 'components/SelectImage';
+import Select from 'components/Select/index.';
 
 const RegistrationPets = () => {
   const { isDarkMode } = useTheme();
@@ -26,8 +27,15 @@ const RegistrationPets = () => {
         <main>
           <form className='register-pet-form'>
             <fieldset>
-              <legend>Dados</legend>
+              <legend>Dados do doador</legend>
 
+              <Input id='name' label='Nome' />
+              <Input id='email' label='E-mail' />
+              <Input id='whatsapp' label='Whatsapp' />
+
+              <br />
+
+              <span className='map-info'>Selecione no mapa o seu endereço</span>
               <Map style={{ width: '100%', height: 280 }}>
                 <Marker
                   interactive={false}
@@ -35,67 +43,72 @@ const RegistrationPets = () => {
                   position={[-27.2092052, -49.6401092]}
                 />
               </Map>
-
-              <div className='input-block'>
-                <label htmlFor='name'>Nome</label>
-                <input id='name' />
-              </div>
-
-              <div className='input-block'>
-                <label htmlFor='phone'>
-                  WhatsApp <span>Para + Informações</span>
-                </label>
-                <input id='phone' />
-              </div>
-
-              <div className='input-block'>
-                <label htmlFor='about'>
-                  Sobre <span>Máximo de 300 caracteres</span>
-                </label>
-                <textarea id='name' maxLength={300} />
-              </div>
-
-              <div className='input-block'>
-                <label htmlFor='images'>Fotos do pet</label>
-
-                <div className='uploaded-image'></div>
-
-                <button className='new-image'>
-                  <FiPlus size={24} color='#fae3a4' />
-                </button>
-              </div>
             </fieldset>
-
             <fieldset>
-              <legend>Informações sobre o Cachorro</legend>
+              <legend>Informações sobre o Pet</legend>
+
+              <ImageUploader />
+
+              <Input id='pet-name' label='Nome do Pet' />
+              <Input id='species' label='Espécie' />
+
+              <Select
+                id='example-select'
+                label='Selecione a espécie'
+                options={[
+                  { value: 'cachorro', label: 'Cachorro' },
+                  { value: 'gato', label: 'Gato' },
+                  { value: 'coelho', label: 'Coelho' },
+                  { value: 'galo', label: 'Galo' },
+                  { value: 'hamster', label: 'Hamster' },
+                  { value: 'porquinho da india', label: 'Porquinho-da-Índia' },
+                  { value: 'pássaro', label: 'Pássaro' },
+                  { value: 'peixe', label: 'Peixe' },
+                ]}
+                onChange={() => {}}
+              />
+
+              <Input id='race' label='Raça' />
+
+              <Select
+                id='example-select'
+                label='Selecione o sexo do animal'
+                options={[
+                  { value: 'Macho', label: 'Macho' },
+                  { value: 'Biologia', label: 'Fêmea' },
+                ]}
+                onChange={() => {}}
+              />
+
+              <Select
+                id='example-select'
+                label='O animal é castrado?'
+                options={[
+                  { value: 'sim', label: 'Sim' },
+                  { value: 'não', label: 'Não' },
+                  { value: 'Não sei', label: 'Não sei informar' },
+                ]}
+                onChange={() => {}}
+              />
+
+              <Input id='color' label='Cor do animal' />
 
               <div className='input-block'>
-                <label htmlFor='pet-name'>Nome do Pet</label>
-                <input id='pet-name' />
-              </div>
-
-              <div className='input-block'>
-                <label htmlFor='age-pet'>Idade do Animal</label>
-                <input id='age-pet' />
+                <label htmlFor='instructions info'>
+                  Mais informações sobre o pet
+                  <span>
+                    Informe se o animal é agrecivo, dócel e o comportamente do
+                    animal em meio a crianças
+                  </span>
+                </label>
+                <textarea id='instructions' />
               </div>
 
               <div className='input-block'>
                 <label htmlFor='instructions'>Informe como será a doação</label>
                 <textarea id='instructions' />
               </div>
-
-              <div className='input-block'>
-                <label htmlFor='open_on_weekends'>Atendimento aos semana</label>
-
-                <div className='button-select'>
-                  <button type='button' className='active'>
-                    Sim
-                  </button>
-                  <button type='button'>Não</button>
-                </div>
-              </div>
             </fieldset>
-
             <PrimaryButton type='submit'>Confirmar</PrimaryButton>
           </form>
         </main>
