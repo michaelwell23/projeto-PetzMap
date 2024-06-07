@@ -9,10 +9,10 @@ import Input from 'components/Input';
 
 import Map from 'components/Map';
 import getLocationIcon from 'components/Map/petzMapIcon';
+import Select from 'components/Select/index';
+import ImageUploader from 'components/SelectImage';
 
 import './styles.css';
-import ImageUploader from 'components/SelectImage';
-import Select from 'components/Select/index.';
 
 const RegistrationPets = () => {
   const { isDarkMode } = useTheme();
@@ -93,13 +93,10 @@ const RegistrationPets = () => {
 
               <Input id='color' label='Cor do animal' />
 
-              <div className='input-block'>
+              <div className='input-block '>
                 <label htmlFor='instructions info'>
-                  Mais informações sobre o pet
-                  <span>
-                    Informe se o animal é agrecivo, dócel e o comportamente do
-                    animal em meio a crianças
-                  </span>
+                  + informações sobre o pet
+                  <span>Informe o comportamento do animal.</span>
                 </label>
                 <textarea id='instructions' />
               </div>

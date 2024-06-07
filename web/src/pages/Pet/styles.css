@@ -11,8 +11,6 @@
   width: 700px;
   margin: 64px auto;
 
-  background: #ffffff;
-  border: 1px solid #d3e2e5;
   border-radius: 20px;
 
   overflow: hidden;
@@ -59,7 +57,6 @@
 }
 
 .pet-details .pet-details-content h1 {
-  color: #4d6f80;
   font-size: 54px;
   line-height: 54px;
   margin-bottom: 8px;
@@ -67,14 +64,11 @@
 
 .pet-details .pet-details-content p {
   line-height: 28px;
-  color: #5c8599;
   margin-top: 24px;
 }
 
 .pet-details .pet-details-content .map-container {
   margin-top: 64px;
-  background: #e6f7fb;
-  border: 1px solid #b3dae2;
   border-radius: 20px;
 }
 
@@ -85,12 +79,10 @@
 
 .pet-details .pet-details-content .map-container footer a {
   line-height: 24px;
-  color: #0089a5;
   text-decoration: none;
 }
 
 .pet-details .pet-details-content .map-container .leaflet-container {
-  border-bottom: 1px solid #dde3f0;
   border-radius: 20px;
 }
 
@@ -103,14 +95,12 @@
   width: 100%;
   height: 1px;
   border: 0;
-  background: #d3e2e6;
   margin: 64px 0;
 }
 
 .pet-details .pet-details-content h2 {
   font-size: 36px;
   line-height: 46px;
-  color: #4d6f80;
 }
 
 .pet-details .pet-details-content .open-details {
@@ -130,6 +120,45 @@
   margin-bottom: 20px;
 }
 
+/* Modo Light */
+body.light-mode .pet-details {
+  background: #ffffff;
+  border: 1px solid #d3e2e5;
+}
+
+body.light-mode .pet-details .pet-details-content h1 {
+  color: #4d6f80;
+}
+
+body.light-mode .pet-details .pet-details-content p {
+  color: #5c8599;
+}
+
+body.light-mode .pet-details .pet-details-content .map-container {
+  background: #e6f7fb;
+  border: 1px solid #b3dae2;
+}
+
+body.light-mode .pet-details .pet-details-content .map-container footer a {
+  color: #0089a5;
+}
+
+body.light-mode
+  .pet-details
+  .pet-details-content
+  .map-container
+  .leaflet-container {
+  border-bottom: 1px solid #dde3f0;
+}
+
+body.light-mode .pet-details .pet-details-content hr {
+  background: #d3e2e6;
+}
+
+body.light-mode .pet-details .pet-details-content h2 {
+  color: #4d6f80;
+}
+
 /* Modo Dark */
 body.dark-mode .pet-details {
   background: #242526;
@@ -140,6 +169,27 @@ body.dark-mode .pet-details .pet-details-content h1 {
 }
 body.dark-mode .pet-details .pet-details-content p {
   color: #f0f0f0;
+}
+
+body.dark-mode .pet-details .pet-details-content .map-container {
+  background: #f0e2bd;
+  border: 1px solid #fff;
+}
+
+body.dark-mode .pet-details .pet-details-content .map-container footer a {
+  color: #000;
+}
+
+body.dark-mode
+  .pet-details
+  .pet-details-content
+  .map-container
+  .leaflet-container {
+  border-bottom: 1px solid #dde3f0;
+}
+
+body.dark-mode .pet-details .pet-details-content hr {
+  background: #f3f1e2;
 }
 
 body.dark-mode .pet-details .pet-details-content h2 {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import L from 'leaflet';
-import { Marker, Popup, TileLayer } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import { FiArrowRight, FiPlus, FiArrowLeft } from 'react-icons/fi';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
@@ -37,9 +37,9 @@ const PetzMap = () => {
           <img src={mapMarketImg} alt='Petz' />
           <button onClick={toggleTheme} className='theme-toggle-button'>
             {isDarkMode ? (
-              <FaMoon size={26} color='rgba(225, 225, 255, 1)' />
+              <FaSun size={26} color='rgba(225, 225, 255, 1)' />
             ) : (
-              <FaSun size={26} color='rgba(0, 0, 0, 0.6)' />
+              <FaMoon size={26} color='rgba(0, 0, 0, 0.6)' />
             )}
           </button>
         </header>

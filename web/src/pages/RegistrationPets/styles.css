@@ -9,11 +9,9 @@
 form.register-pet-form {
   width: 700px;
   margin: 64px auto;
-
   border-radius: 20px;
 
   padding: 64px 80px;
-
   overflow: hidden;
 }
 
@@ -23,7 +21,6 @@ form.register-pet-form fieldset {
 
 form.register-pet-form .map-info {
   font-size: 14px;
-  color: #8fa7b3;
   padding-top: 50px;
   line-height: 24px;
 }
@@ -39,7 +36,6 @@ form.register-pet-form fieldset legend {
   line-height: 34px;
   font-weight: 700;
 
-  border-bottom: 1px solid #d3e2e5;
   margin-bottom: 40px;
 
   padding-top: 24px;
@@ -51,7 +47,6 @@ form.register-pet-form .input-block + .input-block {
 
 form.register-pet-form .input-block label {
   display: flex;
-  /* color: #8fa7b3; */
   margin-bottom: 8px;
   line-height: 24px;
   padding-top: 24px;
@@ -59,17 +54,14 @@ form.register-pet-form .input-block label {
 
 form.register-pet-form .input-block label span {
   font-size: 14px;
-  /* color: #8fa7b3; */
   margin-left: 24px;
   line-height: 24px;
 }
 
 form.register-pet-form .input-block textarea {
   width: 100%;
-  border: 1px solid #d3e2e5;
   border-radius: 20px;
   outline: none;
-  /* color: #5c8599; */
 }
 
 form.register-pet-form .input-block textarea {
@@ -87,8 +79,6 @@ form.register-pet-form .input-block .button-select {
 
 form.register-pet-form .input-block .button-select button {
   height: 64px;
-  border: 1px solid #d3e2e5;
-  /* color: #5c8599; */
   cursor: pointer;
 }
 
@@ -125,6 +115,27 @@ body.light-mode
   border: 1px solid #e9a1a1;
 }
 
+body.light-mode form.register-pet-form .map-info {
+  color: #8fa7b3;
+}
+
+body.light-mode form.register-pet-form fieldset legend {
+  border-bottom: 1px solid #d3e2e5;
+}
+
+body.light-mode form.register-pet-form .input-block label {
+  color: #8fa7b3;
+}
+
+body.light-mode form.register-pet-form .input-block label span {
+  color: #8fa7b3;
+}
+
+body.light-mode form.register-pet-form .input-block textarea {
+  border: 1px solid #d3e2e5;
+  color: #8fa7b3;
+}
+
 /* Modo Dark */
 body.dark-mode #page-registration-pets main {
   background-color: #18191a;
@@ -151,4 +162,25 @@ body.dark-mode
   background: #faf9ee;
   border: 1px solid #e8e9a1;
   color: #000;
+}
+
+body.dark-mode form.register-pet-form .map-info {
+  color: #faf9ee;
+}
+
+body.dark-mode form.register-pet-form fieldset legend {
+  border-bottom: 1px solid #d3e2e5;
+}
+
+body.dark-mode form.register-pet-form .input-block label {
+  color: #faf9ee;
+}
+
+body.dark-mode form.register-pet-form .input-block label span {
+  color: #faf9ee;
+}
+
+body.dark-mode form.register-pet-form .input-block textarea {
+  border: 1px solid #d3e2e5;
+  color: #faf9ee;
 }
