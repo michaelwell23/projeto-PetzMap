@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+<h1 align="center">
+    <img alt="PetzMap" title="PetzMap" src="./src/assets/logo/logo-dark.png" width="500px" />
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p>
+  PetzMap é um marketplace para doação de pets. Com ele você pode observar os diversos animais que estão disponibilizados na sua cidade. O sistema é bem simples de ser utilizado, basta fazer o cadastro do seu pet e esperar por um doador que entrará em contato. O sistema conta com a utilização de uma mapa o que deixa a aplicação divertida e mais interativa.
+</p>
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+<p align="center">
+  <img alt="Login" src="" width="500px" /><br>
+  <img alt="Login" src="" width="500px" /><br>
+  <img alt="Login" src="" width="500px" /><br>
+</p>
 
-### `yarn start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Ferramentas utilizadas na aplicação:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [Axios](https://github.com/axios/axios)
+- [ReactJS](https://vitejs.dev/).
 
-### `yarn test`
+### Ferramentas utilizadas no ambiente de desenvolvimento:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [ESLint](https://github.com/eslint/eslint) - Lint para identificar erros em tempo de desenvolvimento.
+- [Prettier](https://github.com/prettier/prettier) - Padroniza e melhora a visualização do código.
 
-### `yarn build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## :memo: Licença
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Feito com :purple_heart: by [Michael W.Lopes](https://github.com/michael23-lopes)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[![Linkedin Badge](https://img.shields.io/badge/-Michael%20Lopes-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/michael-wellington-lopes/)](https://www.linkedin.com/in/michael-wellington-lopes/)
+[![Gmail Badge](https://img.shields.io/badge/-michael23.wellington@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:michael23.wellington@gmail.com)](mailto:michael23.wellington@gmail.com)
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
