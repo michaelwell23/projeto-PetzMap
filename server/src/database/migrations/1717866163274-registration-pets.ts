@@ -23,10 +23,6 @@ export class registrationPets1717866163274 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'email',
-            type: 'varchar',
-          },
-          {
             name: 'whatsapp',
             type: 'varchar',
           },
@@ -53,7 +49,7 @@ export class registrationPets1717866163274 implements MigrationInterface {
           {
             name: 'breed',
             type: 'varchar',
-            default: 'Não informar',
+            default: "'Não informar'",
           },
           {
             name: 'sex',
@@ -62,7 +58,7 @@ export class registrationPets1717866163274 implements MigrationInterface {
           {
             name: 'castrated',
             type: 'varchar',
-            default: 'Não informar',
+            default: "'Não informar'",
           },
           {
             name: 'color_animal',

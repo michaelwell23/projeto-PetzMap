@@ -1,7 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
+import Image from './Image';
 
 @Entity()
-export default class Pets {
+export default class Pet {
+  [x: string]: any;
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -43,4 +51,10 @@ export default class Pets {
 
   @Column()
   info_donation: string;
+
+  @OneToMany(() => Image, (image) => image.pet, {
+    cascade: ['insert', 'update'],
+  })
+  @JoinColumn({ name: 'pet_id' })
+  images: Image[];
 }
