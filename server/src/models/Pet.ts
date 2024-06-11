@@ -8,7 +8,7 @@ import {
 import Image from './Image';
 
 @Entity()
-export default class Pet {
+export default class Pets {
   [x: string]: any;
   @PrimaryGeneratedColumn('increment')
   id: number;
