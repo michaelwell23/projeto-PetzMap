@@ -11,7 +11,7 @@ export default {
       id,
       name,
       email,
-      phone,
+      whatsapp,
       latitude,
       longitude,
       ad_title,
@@ -37,7 +37,7 @@ export default {
       id,
       name,
       email,
-      phone,
+      whatsapp,
       latitude,
       longitude,
       ad_title,
@@ -102,5 +102,15 @@ export default {
     return response.json(petsView.renderMany(pets));
   },
 
-  async show(request: Request, response: Response) {},
+  async show(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const petsRepository = getRepository(Pets);
+
+    const pet = await petsRepository.findOneOrFail(id, {
+      relations: ['images'],
+    });
+
+    return response.json(petsView.render(pet));
+  },
 };

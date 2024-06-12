@@ -20,7 +20,7 @@ const Map = ({ children, interactive = true, ...props }: MapProps) => {
 
   return (
     <LeafletMap
-      center={[-27.2092052, -49.6401092]}
+      center={[-23.200928, -47.294776]}
       zoom={15}
       style={{ width: '100%', height: '100%' }}
       dragging={interactive}

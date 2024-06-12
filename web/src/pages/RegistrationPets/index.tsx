@@ -19,6 +19,32 @@ const RegistrationPets = () => {
 
   const locationIcon = getLocationIcon(isDarkMode);
 
+  // const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+  // const [name, setName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [whatsapp, setWhatsapp] = useState('');
+  // const [addTitle, setAddTitle] = useState('');
+  // const [species, setSpecies] = useState('');
+  // const [breed] = useState('');
+  // const [sex] = useState('');
+  // const [castrated] = useState('');
+  // const [colorAnimal] = useState('');
+  // const [infoPet] = useState('');
+  // const [infoDonation] = useState('');
+  // const [images, setImages] = useState<File[]>([]);
+  // const [previewImages, setPreviewImages] = useState<string[]>([]);
+
+  // function handleMapClick(event: LeafletMouseEvent) {
+  //   const { lat, lng } = event.latlng;
+
+  //   setPosition({
+  //     latitude: lat,
+  //     longitude: lng,
+  //   });
+  // }
+
+  // async function handleSubmit(){}
+
   return (
     <>
       <div id='page-registration-pets'>

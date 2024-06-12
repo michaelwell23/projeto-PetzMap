@@ -11,6 +11,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/react-svg": "^5.0.0",
+    "axios": "0.20",
     "leaflet": "^1.7.1",
     "pigeon-maps": "^0.16.1",
     "react": "^18.3.1",

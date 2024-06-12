@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import L from 'leaflet';
 import { Marker, Popup } from 'react-leaflet';
@@ -7,7 +7,10 @@ import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useTheme } from 'context/ThemeContext';
 
+import api from 'services/api';
+
 import Map from 'components/Map';
+
 import mapMarketImg from '../../assets/MapMarket/mapIcon-light.png';
 import locationLight from '../../assets/MapMarket/location-light.png';
 import locationDark from '../../assets/MapMarket/location-dark.png';
@@ -25,10 +28,30 @@ const getLocationIcon = (isDarkMode: boolean) => {
   });
 };
 
+interface Image {
+  url: string;
+  urlMobile: string;
+}
+
+interface Pets {
+  id: number;
+  ad_title: string;
+  latitude: number;
+  longitude: number;
+  images: Image[];
+}
+
 const PetzMap = () => {
   const { isDarkMode, toggleTheme } = useTheme();
+  const [pets, setPets] = useState<Pets[]>([]);
 
   const locationIcon = getLocationIcon(isDarkMode);
+
+  useEffect(() => {
+    api.get('pets').then((response) => {
+      setPets(response.data);
+    });
+  }, []);
 
   return (
     <div id='page-map' className={isDarkMode ? 'dark-mode' : 'light-mode'}>
@@ -70,26 +93,40 @@ const PetzMap = () => {
 
       <Map
         style={{ width: '100%', height: '100%' }}
-        center={[-27.2092052, -49.6401092]}
+        center={[-23.200928, -47.294776]}
         zoom={15}
       >
-        <Marker icon={locationIcon} position={[-27.2092052, -49.6401092]}>
-          <Popup
-            closeButton={false}
-            minWidth={240}
-            maxWidth={240}
-            className='map-popup'
-          >
-            Cachorro Caramelo
-            <Link to={`/pet/1`}>
-              {isDarkMode ? (
-                <FiArrowRight size={20} color='rgba(0, 0, 0, 0.6)' />
-              ) : (
-                <FiArrowRight size={20} color='rgba(225, 225, 255, 1)' />
-              )}
-            </Link>
-          </Popup>
-        </Marker>
+        {pets.map((pet) => {
+          const petImage = pet.images.length > 0 ? pet.images[0].url : '';
+
+          return (
+            <Marker
+              icon={locationIcon}
+              position={[pet.latitude, pet.longitude]}
+              key={pet.id}
+            >
+              <Popup
+                closeButton={false}
+                minWidth={240}
+                maxWidth={240}
+                className='map-popup'
+              >
+                <img src={petImage} alt={pet.ad_title} />
+
+                <div className='info'>
+                  {pet.ad_title}
+                  <Link to={`pets/${pet.id}`}>
+                    {isDarkMode ? (
+                      <FiArrowRight size={20} color='rgba(0, 0, 0, 0.6)' />
+                    ) : (
+                      <FiArrowRight size={20} color='rgba(225, 225, 255, 1)' />
+                    )}
+                  </Link>
+                </div>
+              </Popup>
+            </Marker>
+          );
+        })}
       </Map>
 
       <Link to='/registration-pets' className='register-pet'>

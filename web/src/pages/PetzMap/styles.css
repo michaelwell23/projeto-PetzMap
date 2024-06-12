@@ -97,8 +97,22 @@
   margin: 8px 12px;
 
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#page-map .map-popup .leaflet-popup-content img {
+  max-width: 200px;
+}
+
+#page-map .map-popup .leaflet-popup-content .info {
+  display: flex;
   justify-content: space-between;
   align-items: center;
+
+  gap: 20px;
+
+  margin: 8px 12px;
 }
 
 #page-map .map-popup .leaflet-popup-content a {
