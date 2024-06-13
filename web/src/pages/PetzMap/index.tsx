@@ -115,7 +115,7 @@ const PetzMap = () => {
 
                 <div className='info'>
                   {pet.ad_title}
-                  <Link to={`pets/${pet.id}`}>
+                  <Link to={`/pet/${pet.id}`}>
                     {isDarkMode ? (
                       <FiArrowRight size={20} color='rgba(0, 0, 0, 0.6)' />
                     ) : (

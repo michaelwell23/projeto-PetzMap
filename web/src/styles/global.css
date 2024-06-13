@@ -30,12 +30,25 @@ body {
     color var(--transition-duration) var(--transition-timing-function);
 }
 
+a {
+  text-decoration: none;
+  font: 600 18px Nunito, sans-serif;
+}
+
 body.light-mode {
   background-color: #ffffff;
   color: #000000;
 }
 
+body.light-mode a {
+  color: #ffffff;
+}
+
 body.dark-mode {
   background-color: #121212;
   color: #ffffff;
+}
+
+body.dark-mode a {
+  color: #000000;
 }

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { Marker, TileLayer } from 'react-leaflet';
-import L from 'leaflet';
+import { Marker } from 'react-leaflet';
 
 import { FaWhatsapp } from 'react-icons/fa';
-import { FiClock, FiInfo } from 'react-icons/fi';
 
 import PrimaryButton from 'components/PrimaryButton';
 import Sidebar from 'components/Sidebar';
@@ -15,11 +14,50 @@ import { useTheme } from 'context/ThemeContext';
 import getLocationIcon from 'components/Map/petzMapIcon';
 
 import './styles.css';
+import api from 'services/api';
+
+interface PetData {
+  name: string;
+  email: string;
+  whatsapp: string;
+  latitude: number;
+  longitude: number;
+  ad_title: string;
+  species: string;
+  breed: string;
+  sex: string;
+  castrated: string;
+  color_animal: string;
+  info_pet: string;
+  info_donation: string;
+  images: Array<{
+    url: string;
+    id: number;
+  }>;
+}
+
+interface PetParams extends Record<string, string | undefined> {
+  id: string;
+}
 
 const Pet: React.FC = () => {
   const { isDarkMode } = useTheme();
+  const params = useParams<PetParams>();
+
+  const [pet, setPet] = useState<PetData>();
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const locationIcon = getLocationIcon(isDarkMode);
+
+  useEffect(() => {
+    api.get(`/pets/${params.id}`).then((response) => {
+      setPet(response.data);
+    });
+  }, [params.id]);
+
+  if (!pet) {
+    return <p>Carregando...</p>;
+  }
 
   return (
     <>
@@ -28,92 +66,56 @@ const Pet: React.FC = () => {
 
         <main>
           <div className='pet-details'>
-            <img
-              src='https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg'
-              alt='Lar das meninas'
-            />
+            <img src={pet.images[activeImageIndex].url} alt={pet.ad_title} />
 
             <div className='images'>
-              <button className='active' type='button'>
-                <img
-                  src='https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg'
-                  alt='Lar das meninas'
-                />
-              </button>
-              <button type='button'>
-                <img
-                  src='https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg'
-                  alt='Lar das meninas'
-                />
-              </button>
-              <button type='button'>
-                <img
-                  src='https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg'
-                  alt='Lar das meninas'
-                />
-              </button>
-              <button type='button'>
-                <img
-                  src='https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg'
-                  alt='Lar das meninas'
-                />
-              </button>
-              <button type='button'>
-                <img
-                  src='https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg'
-                  alt='Lar das meninas'
-                />
-              </button>
-              <button type='button'>
-                <img
-                  src='https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg'
-                  alt='Lar das meninas'
-                />
-              </button>
+              {pet.images.map((image, index) => {
+                return (
+                  <button
+                    className={activeImageIndex === index ? 'active' : ''}
+                    type='button'
+                    key={image.id}
+                    onClick={() => {
+                      setActiveImageIndex(index);
+                    }}
+                  >
+                    <img src={image.url} alt={pet.name} />
+                  </button>
+                );
+              })}
             </div>
 
             <div className='pet-details-content'>
-              <h1>Cachorro Caraleo</h1>
+              <h1>{pet.ad_title}</h1>
 
               <div className='info-pet'>
                 <p>
-                  Espécie:<span></span>
+                  Espécie: <span>{pet.species}</span>
                 </p>
                 <p>
-                  Raça: <span></span>
+                  Raça: <span>{pet.breed}</span>
                 </p>
                 <p>
-                  Idade:<span></span>
+                  Sexo: <span>{pet.sex}</span>
                 </p>
                 <p>
-                  Sexo: <span></span>
+                  Castrado: <span>{pet.castrated}</span>
                 </p>
                 <p>
-                  Castrado: <span></span>
-                </p>
-                <p>
-                  Cor: <span></span>
-                </p>
-                <p>
-                  Vacinas: <span></span>
+                  Cor: <span>{pet.color_animal}</span>
                 </p>
               </div>
 
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum
-                corrupti quae sed suscipit explicabo quisquam officiis dolorem!
-                Itaque qui incidunt ullam est perspiciatis saepe dolorem iste!
-                Hic quis molestiae totam!
-              </p>
+              <p>{pet.info_pet}</p>
 
               <hr />
 
               <h2>Informação do doador</h2>
               <p>
-                Nome: <span></span>
+                Nome: <span>{pet.name}</span>
               </p>
               <p>
-                E-mail: <span></span>
+                E-mail: <span>{pet.email}</span>
               </p>
 
               <hr />
@@ -122,34 +124,34 @@ const Pet: React.FC = () => {
               <div className='map-container'>
                 <Map
                   interactive={false}
-                  center={[-27.2092052, -49.6401092]}
+                  center={[pet.latitude, pet.longitude]}
                   zoom={16}
                   style={{ width: '100%', height: 280 }}
                 >
                   <Marker
                     interactive={false}
                     icon={locationIcon}
-                    position={[-27.2092052, -49.6401092]}
+                    position={[pet.latitude, pet.longitude]}
                   />
                 </Map>
 
                 <footer>
-                  <a href=''>Ver rotas no Google Maps</a>
+                  <a
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${pet.latitude},${pet.longitude}`}
+                  >
+                    Ver rotas no Google Maps
+                  </a>
                 </footer>
               </div>
 
               <hr />
 
               <h2>Informações complementares</h2>
-              <span>Mais infomações sobre a doação</span>
 
               <div className='open-details'>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                  accusamus quod explicabo tempora dolorem voluptate, deleniti
-                  dignissimos rerum sit officiis enim harum in, accusantium eos
-                  excepturi ut, aperiam architecto cupiditate?
-                </p>
+                <p>{pet.info_donation}</p>
               </div>
 
               <PrimaryButton type='button'>
@@ -158,7 +160,7 @@ const Pet: React.FC = () => {
                 ) : (
                   <FaWhatsapp size={25} color='rgba(225, 225, 255, 1)' />
                 )}
-                Entrar em contato
+                <a href={`https://wa.me/${pet.whatsapp}`}>Entrar em contato</a>
               </PrimaryButton>
             </div>
           </div>
