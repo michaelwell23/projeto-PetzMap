@@ -72,6 +72,26 @@ form.register-pet-form .input-block textarea {
   line-height: 28px;
 }
 
+form.create-orphanage-form .input-block .images-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 16px;
+}
+
+form.create-orphanage-form .input-block input[type='file'] {
+  display: none;
+}
+
+form.create-orphanage-form .input-block .new-image {
+  height: 96px;
+  border-radius: 20px;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 form.register-pet-form .input-block .button-select {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -136,6 +156,11 @@ body.light-mode form.register-pet-form .input-block textarea {
   color: #8fa7b3;
 }
 
+body.light-mode form.register-pet-form .input-block .new-image {
+  background: #f5f8fa;
+  border: 1px dashed #96d2f0;
+}
+
 /* Modo Dark */
 body.dark-mode #page-registration-pets main {
   background-color: #18191a;
@@ -183,4 +208,9 @@ body.dark-mode form.register-pet-form .input-block label span {
 body.dark-mode form.register-pet-form .input-block textarea {
   border: 1px solid #d3e2e5;
   color: #faf9ee;
+}
+
+body.dark-mode form.register-pet-form .input-block .new-image {
+  background: #3a3b3c;
+  border: 1px dashed #fff;
 }

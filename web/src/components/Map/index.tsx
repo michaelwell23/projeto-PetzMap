@@ -1,22 +1,34 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import {
   Map as LeafletMap,
   MapProps as LeafletMapProps,
   TileLayer,
 } from 'react-leaflet';
-
 import { useTheme } from 'context/ThemeContext';
-
 import 'leaflet/dist/leaflet.css';
 
 interface MapProps extends LeafletMapProps {
   interactive?: boolean;
   children: React.ReactNode;
+  onClick?: (event: any) => void; // Adiciona a propriedade onClick
 }
 
-const Map = ({ children, interactive = true, ...props }: MapProps) => {
+const Map = ({ children, interactive = true, onClick, ...props }: MapProps) => {
   const { isDarkMode } = useTheme();
+
+  useEffect(() => {
+    if (onClick) {
+      const map = document.querySelector('.leaflet-container');
+      if (map) {
+        map.addEventListener('click', onClick);
+      }
+      return () => {
+        if (map) {
+          map.removeEventListener('click', onClick);
+        }
+      };
+    }
+  }, [onClick]);
 
   return (
     <LeafletMap

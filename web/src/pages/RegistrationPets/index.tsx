@@ -1,49 +1,102 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Marker } from 'react-leaflet';
+import { LeafletMouseEvent } from 'leaflet';
 
 import { useTheme } from 'context/ThemeContext';
 
+import { FiPlus } from 'react-icons/fi';
+
+import getLocationIcon from 'components/Map/petzMapIcon';
 import PrimaryButton from 'components/PrimaryButton';
+import Select from 'components/Select/index';
 import Sidebar from 'components/Sidebar';
 import Input from 'components/Input';
-
 import Map from 'components/Map';
-import getLocationIcon from 'components/Map/petzMapIcon';
-import Select from 'components/Select/index';
-import ImageUploader from 'components/SelectImage';
+
+import api from 'services/api';
 
 import './styles.css';
 
 const RegistrationPets = () => {
+  const navigate = useNavigate();
   const { isDarkMode } = useTheme();
 
   const locationIcon = getLocationIcon(isDarkMode);
 
-  // const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
-  // const [name, setName] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [whatsapp, setWhatsapp] = useState('');
-  // const [addTitle, setAddTitle] = useState('');
-  // const [species, setSpecies] = useState('');
-  // const [breed] = useState('');
-  // const [sex] = useState('');
-  // const [castrated] = useState('');
-  // const [colorAnimal] = useState('');
-  // const [infoPet] = useState('');
-  // const [infoDonation] = useState('');
-  // const [images, setImages] = useState<File[]>([]);
-  // const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
 
-  // function handleMapClick(event: LeafletMouseEvent) {
-  //   const { lat, lng } = event.latlng;
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
+  const [ad_title, setAdTitle] = useState('');
+  const [species, setSpecies] = useState('');
+  const [breed, setBreed] = useState('');
+  const [sex, setSex] = useState('');
+  const [castrated, setCastrated] = useState('');
+  const [color_animal, setcolorAnimal] = useState('');
+  const [info_pet, setInfoPet] = useState('');
+  const [info_donation, setInfoDonation] = useState('');
+  const [images, setImages] = useState<File[]>([]);
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
-  //   setPosition({
-  //     latitude: lat,
-  //     longitude: lng,
-  //   });
-  // }
+  function handleMapClick(event: LeafletMouseEvent) {
+    const { lat, lng } = event.latlng;
 
-  // async function handleSubmit(){}
+    setPosition({
+      latitude: lat,
+      longitude: lng,
+    });
+  }
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    const { latitude, longitude } = position;
+
+    const data = new FormData();
+
+    data.append('name', name);
+    data.append('email', email);
+    data.append('whatsapp', whatsapp);
+    data.append('ad_title', ad_title);
+    data.append('species', species);
+    data.append('breed', breed);
+    data.append('sex', sex);
+    data.append('castrated', castrated);
+    data.append('color_animal', color_animal);
+    data.append('info_pet', info_pet);
+    data.append('info_donation', info_donation);
+    data.append('latitude', String(latitude));
+    data.append('longitude', String(longitude));
+
+    images.forEach((image) => {
+      data.append('images', image);
+    });
+
+    await api.post('pets', data);
+
+    alert('Cadastro realizado com Sucesso!');
+
+    navigate('/app');
+  }
+
+  function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
+    if (!event.target.files) {
+      return;
+    }
+
+    const selectedImages = Array.from(event.target.files);
+
+    setImages(selectedImages);
+
+    const selectedImagesPreview = selectedImages.map((image) => {
+      return URL.createObjectURL(image);
+    });
+
+    setPreviewImages(selectedImagesPreview);
+  }
 
   return (
     <>
@@ -51,32 +104,85 @@ const RegistrationPets = () => {
         <Sidebar />
 
         <main>
-          <form className='register-pet-form'>
+          <form onSubmit={handleSubmit} className='register-pet-form'>
             <fieldset>
               <legend>Dados do doador</legend>
 
-              <Input id='name' label='Nome' />
-              <Input id='email' label='E-mail' />
-              <Input id='whatsapp' label='Whatsapp' />
+              <Input
+                id='name'
+                value={name}
+                htmlForm={name}
+                onChange={(e) => setName(e.target.value)}
+                label='Nome'
+              />
 
+              <Input
+                id='email'
+                value={email}
+                htmlForm={email}
+                onChange={(e) => setEmail(e.target.value)}
+                label='E-mail'
+              />
+
+              <Input
+                id='whatsapp'
+                value={whatsapp}
+                htmlForm={whatsapp}
+                onChange={(e) => setWhatsapp(e.target.value)}
+                label='Whatsapp (para contato)'
+              />
               <br />
 
               <span className='map-info'>Selecione no mapa o seu endereço</span>
-              <Map style={{ width: '100%', height: 280 }}>
-                <Marker
-                  interactive={false}
-                  icon={locationIcon}
-                  position={[-27.2092052, -49.6401092]}
-                />
+              <Map
+                style={{ width: '100%', height: 280 }}
+                zoom={15}
+                onClick={handleMapClick}
+              >
+                {position.latitude != 0 && (
+                  <Marker
+                    interactive={false}
+                    icon={locationIcon}
+                    position={[position.latitude, position.longitude]}
+                  />
+                )}
               </Map>
             </fieldset>
             <fieldset>
               <legend>Informações sobre o Pet</legend>
 
-              <ImageUploader />
+              <div className='input-block'>
+                <label htmlFor='images'>Fotos</label>
 
-              <Input id='pet-name' label='Nome do Pet' />
-              <Input id='species' label='Espécie' />
+                <div className='images-container'>
+                  {previewImages.map((image) => {
+                    return <img key={image} src={image} alt={name} />;
+                  })}
+
+                  <label htmlFor='image[]' className='new-image'>
+                    {isDarkMode ? (
+                      <FiPlus size={26} color='rgba(225, 225, 255, 1)' />
+                    ) : (
+                      <FiPlus size={26} color='#5c8599' />
+                    )}
+                  </label>
+                </div>
+
+                <input
+                  multiple
+                  onChange={handleSelectImages}
+                  type='file'
+                  id='image[]'
+                />
+              </div>
+
+              <Input
+                id='ad_title'
+                value={ad_title}
+                htmlForm={ad_title}
+                onChange={(e) => setAdTitle(e.target.value)}
+                label='Titulo do Anuncio'
+              />
 
               <Select
                 id='example-select'
@@ -91,10 +197,17 @@ const RegistrationPets = () => {
                   { value: 'pássaro', label: 'Pássaro' },
                   { value: 'peixe', label: 'Peixe' },
                 ]}
-                onChange={() => {}}
+                value={species}
+                onChange={(e) => setSpecies(e.target.value)}
               />
 
-              <Input id='race' label='Raça' />
+              <Input
+                id='race'
+                label='Raça'
+                value={breed}
+                htmlForm={breed}
+                onChange={(e) => setBreed(e.target.value)}
+              />
 
               <Select
                 id='example-select'
@@ -103,7 +216,8 @@ const RegistrationPets = () => {
                   { value: 'Macho', label: 'Macho' },
                   { value: 'Biologia', label: 'Fêmea' },
                 ]}
-                onChange={() => {}}
+                value={sex}
+                onChange={(e) => setSex(e.target.value)}
               />
 
               <Select
@@ -114,24 +228,37 @@ const RegistrationPets = () => {
                   { value: 'não', label: 'Não' },
                   { value: 'Não sei', label: 'Não sei informar' },
                 ]}
-                onChange={() => {}}
+                value={castrated}
+                onChange={(e) => setCastrated(e.target.value)}
               />
 
-              <Input id='color' label='Cor do animal' />
+              <Input
+                id='color'
+                label='Cor do animal'
+                value={color_animal}
+                htmlForm={color_animal}
+                onChange={(e) => setcolorAnimal(e.target.value)}
+              />
 
-              <div className='input-block '>
-                <label htmlFor='instructions info'>
-                  + informações sobre o pet
-                  <span>Informe o comportamento do animal.</span>
-                </label>
-                <textarea id='instructions' />
+              <div className='input-block'>
+                <label htmlFor='informações do pet'>Informações do Pet</label>
+                <textarea
+                  id='info_pet'
+                  value={info_pet}
+                  onChange={(e) => setInfoPet(e.target.value)}
+                />
               </div>
 
               <div className='input-block'>
-                <label htmlFor='instructions'>Informe como será a doação</label>
-                <textarea id='instructions' />
+                <label htmlFor='informaçõe'>Instruções</label>
+                <textarea
+                  id='instructions'
+                  value={info_donation}
+                  onChange={(e) => setInfoDonation(e.target.value)}
+                />
               </div>
             </fieldset>
+
             <PrimaryButton type='submit'>Confirmar</PrimaryButton>
           </form>
         </main>
