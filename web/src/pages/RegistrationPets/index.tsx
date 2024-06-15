@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Marker } from 'react-leaflet';
+import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 
 import { useTheme } from 'context/ThemeContext';
@@ -13,15 +13,17 @@ import PrimaryButton from 'components/PrimaryButton';
 import Select from 'components/Select/index';
 import Sidebar from 'components/Sidebar';
 import Input from 'components/Input';
-import Map from 'components/Map';
 
 import api from 'services/api';
 
 import './styles.css';
+import { useLocation } from 'context/LocationContext';
 
 const RegistrationPets = () => {
-  const navigate = useNavigate();
   const { isDarkMode } = useTheme();
+  const { latitude, longitude } = useLocation();
+
+  const navigate = useNavigate();
 
   const locationIcon = getLocationIcon(isDarkMode);
 
@@ -134,11 +136,20 @@ const RegistrationPets = () => {
               <br />
 
               <span className='map-info'>Selecione no mapa o seu endereço</span>
+
               <Map
+                center={[latitude || 0, longitude || 0]}
                 style={{ width: '100%', height: 280 }}
                 zoom={15}
                 onClick={handleMapClick}
               >
+                <TileLayer
+                  url={`https://api.mapbox.com/styles/v1/mapbox/${
+                    isDarkMode ? 'navigation-preview-night-v4' : 'light-v10'
+                  }/tiles/256/{z}/{x}/{y}@2x?access_token=${
+                    process.env.REACT_APP_MAPBOX_TOKEN
+                  }`}
+                />
                 {position.latitude != 0 && (
                   <Marker
                     interactive={false}

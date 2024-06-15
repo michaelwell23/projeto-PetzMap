@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css';
 interface MapProps extends LeafletMapProps {
   interactive?: boolean;
   children: React.ReactNode;
-  onClick?: (event: any) => void; // Adiciona a propriedade onClick
+  onClick?: (event: any) => void;
 }
 
 const Map = ({ children, interactive = true, onClick, ...props }: MapProps) => {

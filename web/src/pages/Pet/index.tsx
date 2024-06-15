@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Marker } from 'react-leaflet';
+import { Map, Marker, TileLayer } from 'react-leaflet';
 
 import { FaWhatsapp } from 'react-icons/fa';
 
 import PrimaryButton from 'components/PrimaryButton';
 import Sidebar from 'components/Sidebar';
-import Map from 'components/Map';
 
 import { useTheme } from 'context/ThemeContext';
+import { useLocation } from 'context/LocationContext';
 
 import getLocationIcon from 'components/Map/petzMapIcon';
 
@@ -42,6 +42,8 @@ interface PetParams extends Record<string, string | undefined> {
 
 const Pet: React.FC = () => {
   const { isDarkMode } = useTheme();
+  const { latitude, longitude } = useLocation();
+
   const params = useParams<PetParams>();
 
   const [pet, setPet] = useState<PetData>();
@@ -123,11 +125,22 @@ const Pet: React.FC = () => {
               <h2>Endereço do doador</h2>
               <div className='map-container'>
                 <Map
-                  interactive={false}
-                  center={[pet.latitude, pet.longitude]}
+                  center={[latitude || 0, longitude || 0]}
                   zoom={16}
                   style={{ width: '100%', height: 280 }}
+                  dragging={false}
+                  touchZoom={false}
+                  zoomControl={false}
+                  scrollWheelZoom={false}
+                  doubleClickZoom={false}
                 >
+                  <TileLayer
+                    url={`https://api.mapbox.com/styles/v1/mapbox/${
+                      isDarkMode ? 'navigation-preview-night-v4' : 'light-v10'
+                    }/tiles/256/{z}/{x}/{y}@2x?access_token=${
+                      process.env.REACT_APP_MAPBOX_TOKEN
+                    }`}
+                  />
                   <Marker
                     interactive={false}
                     icon={locationIcon}

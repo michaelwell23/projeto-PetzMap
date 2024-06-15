@@ -5,6 +5,7 @@ import { FaArrowRight, FaSun, FaMoon } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import { useTheme } from 'context/ThemeContext';
+import { useLocation } from 'context/LocationContext';
 
 import logoLight from '../../assets/logo/logo-light.png';
 import logoDark from '../../assets/logo/logo-dark.png';
@@ -13,6 +14,9 @@ import './styles.css';
 
 const Landing = () => {
   const { isDarkMode, toggleTheme } = useTheme();
+  const { city, state } = useLocation();
+
+  console.log(city, state);
 
   return (
     <div id='page-landing' className={isDarkMode ? 'dark-mode' : 'light-mode'}>
@@ -30,8 +34,8 @@ const Landing = () => {
 
         <div className='location'>
           <div className='local'>
-            <strong>Salto,</strong>
-            <span>São Paulo</span>
+            <strong>{city},</strong>
+            <span>{state}</span>
           </div>
 
           <button onClick={toggleTheme}>

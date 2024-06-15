@@ -6,6 +6,7 @@ import { FiArrowRight, FiPlus, FiArrowLeft } from 'react-icons/fi';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useTheme } from 'context/ThemeContext';
+import { useLocation } from 'context/LocationContext';
 
 import api from 'services/api';
 
@@ -43,6 +44,8 @@ interface Pets {
 
 const PetzMap = () => {
   const { isDarkMode, toggleTheme } = useTheme();
+  const { city, state, latitude, longitude } = useLocation();
+
   const [pets, setPets] = useState<Pets[]>([]);
 
   const locationIcon = getLocationIcon(isDarkMode);
@@ -85,15 +88,15 @@ const PetzMap = () => {
             </Link>
           </div>
           <div className='locale'>
-            <strong>Salto,</strong>
-            <span>São Paulo</span>
+            <strong>{city}</strong>
+            <span>{state}</span>
           </div>
         </footer>
       </aside>
 
       <Map
         style={{ width: '100%', height: '100%' }}
-        center={[-23.200928, -47.294776]}
+        center={[latitude || 0, longitude || 0]}
         zoom={15}
       >
         {pets.map((pet) => {

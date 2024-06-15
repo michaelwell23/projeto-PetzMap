@@ -72,18 +72,24 @@ form.register-pet-form .input-block textarea {
   line-height: 28px;
 }
 
-form.create-orphanage-form .input-block .images-container {
+form.register-pet-form .input-block .images-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 16px;
 }
 
-form.create-orphanage-form .input-block input[type='file'] {
+form.register-pet-form .input-block input[type='file'] {
   display: none;
 }
 
-form.create-orphanage-form .input-block .new-image {
+form.register-pet-form .input-block .images-container .new-image {
+  padding-top: 0;
+}
+
+form.register-pet-form .input-block .images-container .new-image,
+form.register-pet-form .input-block .images-container img {
   height: 96px;
+  width: 100%;
   border-radius: 20px;
   cursor: pointer;
 
