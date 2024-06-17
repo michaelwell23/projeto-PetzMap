@@ -77,11 +77,30 @@ const RegistrationPets = () => {
       data.append('images', image);
     });
 
-    await api.post('pets', data);
+    console.log('Form Data:', {
+      name,
+      email,
+      whatsapp,
+      ad_title,
+      species,
+      breed,
+      sex,
+      castrated,
+      color_animal,
+      info_pet,
+      info_donation,
+      latitude,
+      longitude,
+      images,
+    });
 
-    alert('Cadastro realizado com Sucesso!');
-
-    navigate('/app');
+    try {
+      await api.post('pets', data);
+      alert('Cadastro realizado com Sucesso!');
+      navigate('/app');
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
@@ -196,7 +215,8 @@ const RegistrationPets = () => {
               />
 
               <Select
-                id='example-select'
+                id='species'
+                name='species'
                 label='Selecione a espécie'
                 options={[
                   { value: 'cachorro', label: 'Cachorro' },
@@ -221,23 +241,25 @@ const RegistrationPets = () => {
               />
 
               <Select
-                id='example-select'
+                id='sex'
+                name='sex'
                 label='Selecione o sexo do animal'
                 options={[
                   { value: 'Macho', label: 'Macho' },
-                  { value: 'Biologia', label: 'Fêmea' },
+                  { value: 'Fêmea', label: 'Fêmea' },
                 ]}
                 value={sex}
                 onChange={(e) => setSex(e.target.value)}
               />
 
               <Select
-                id='example-select'
+                id='castrated'
+                name='castrated'
                 label='O animal é castrado?'
                 options={[
                   { value: 'sim', label: 'Sim' },
                   { value: 'não', label: 'Não' },
-                  { value: 'Não sei', label: 'Não sei informar' },
+                  { value: 'nao sei', label: 'Não sei informar' },
                 ]}
                 value={castrated}
                 onChange={(e) => setCastrated(e.target.value)}

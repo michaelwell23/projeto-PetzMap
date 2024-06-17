@@ -9,7 +9,6 @@ import PrimaryButton from 'components/PrimaryButton';
 import Sidebar from 'components/Sidebar';
 
 import { useTheme } from 'context/ThemeContext';
-import { useLocation } from 'context/LocationContext';
 
 import getLocationIcon from 'components/Map/petzMapIcon';
 
@@ -42,7 +41,6 @@ interface PetParams extends Record<string, string | undefined> {
 
 const Pet: React.FC = () => {
   const { isDarkMode } = useTheme();
-  const { latitude, longitude } = useLocation();
 
   const params = useParams<PetParams>();
 
@@ -125,7 +123,7 @@ const Pet: React.FC = () => {
               <h2>Endereço do doador</h2>
               <div className='map-container'>
                 <Map
-                  center={[latitude || 0, longitude || 0]}
+                  center={[pet.latitude || 0, pet.longitude || 0]}
                   zoom={16}
                   style={{ width: '100%', height: 280 }}
                   dragging={false}

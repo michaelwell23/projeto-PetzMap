@@ -41,7 +41,7 @@ body.light-mode {
 }
 
 body.light-mode a {
-  color: #000;
+  color: #ffffff;
 }
 
 body.dark-mode {
@@ -50,5 +50,5 @@ body.dark-mode {
 }
 
 body.dark-mode a {
-  color: #ffffff;
+  color: #000;
 }

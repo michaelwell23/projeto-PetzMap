@@ -1,9 +1,10 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   OneToMany,
   JoinColumn,
+  CreateDateColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import Image from './Image';
 
@@ -51,6 +52,9 @@ export default class Pets {
 
   @Column()
   info_donation: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @OneToMany(() => Image, (image) => image.pet, {
     cascade: ['insert', 'update'],
