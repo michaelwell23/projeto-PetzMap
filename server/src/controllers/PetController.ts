@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, request } from 'express';
 import { getRepository } from 'typeorm';
 import * as Yup from 'yup';
 
@@ -112,5 +112,35 @@ export default {
     });
 
     return response.json(petsView.render(pet));
+  },
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+    const petsRepository = getRepository(Pets);
+
+    const pet = await petsRepository.findOne(id);
+    if (!pet) {
+      return response.status(404).json({ message: 'Pet not found' });
+    }
+
+    await petsRepository.delete(id);
+
+    return response.status(204).send();
+  },
+
+  async renew(request: Request, response: Response) {
+    const { id } = request.params;
+    const petsRepository = getRepository(Pets);
+
+    const pet = await petsRepository.findOne(id);
+
+    if (!pet) {
+      return response.status(404).json({ message: 'Pet not found' });
+    }
+
+    pet.createdAt = new Date();
+    await petsRepository.save(pet);
+
+    return response.json({ message: 'Cadastro renovado por mais 60 dias' });
   },
 };
