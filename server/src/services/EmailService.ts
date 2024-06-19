@@ -1,35 +1,25 @@
 import nodemailer from 'nodemailer';
 
-class EmailService {
-  private transporter;
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: parseInt(process.env.SMTP_PORT || '2525'),
+  secure: false,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
-  constructor() {
-    this.transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '2525'),
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-  }
-
-  public async sendMail(to: string, subject: string, text: string) {
-    const mailOptions = {
+export const sendMail = async (to: string, subject: string, html: string) => {
+  try {
+    await transporter.sendMail({
       from: process.env.SMTP_USER,
       to,
       subject,
-      text,
-    };
-
-    try {
-      await this.transporter.sendMail(mailOptions);
-      console.log('Email sent successfully');
-    } catch (error) {
-      console.error('Error sending email:', error);
-    }
+      html,
+    });
+    console.log('Email enviado para', to);
+  } catch (error) {
+    console.error('Erro ao enviar e-mail:', error);
   }
-}
-
-export default new EmailService();
+};

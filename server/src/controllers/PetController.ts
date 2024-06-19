@@ -22,6 +22,7 @@ export default {
       color_animal,
       info_pet,
       info_donation,
+      createdAt,
     } = request.body;
 
     const petsRepository = getRepository(Pets);
@@ -49,6 +50,7 @@ export default {
       info_pet,
       info_donation,
       images,
+      createdAt,
     };
 
     const schema = Yup.object().shape({
@@ -114,33 +116,42 @@ export default {
     return response.json(petsView.render(pet));
   },
 
-  async delete(request: Request, response: Response) {
-    const { id } = request.params;
-    const petsRepository = getRepository(Pets);
+  async renew(req: Request, res: Response) {
+    const petRepository = getRepository(Pets);
+    const petId = req.params.id;
 
-    const pet = await petsRepository.findOne(id);
-    if (!pet) {
-      return response.status(404).json({ message: 'Pet not found' });
+    try {
+      const pet = await petRepository.findOne(petId);
+
+      if (!pet) {
+        return res.status(404).send('Registration not found.');
+      }
+
+      pet.createdAt = new Date();
+      await petRepository.save(pet);
+
+      res.send('Registration successfully renewed!');
+    } catch (error) {
+      res.status(500).send('Error renewing registration.');
     }
-
-    await petsRepository.delete(id);
-
-    return response.status(204).send();
   },
 
-  async renew(request: Request, response: Response) {
-    const { id } = request.params;
-    const petsRepository = getRepository(Pets);
+  async delete(req: Request, res: Response) {
+    const petRepository = getRepository(Pets);
+    const petId = req.params.id;
 
-    const pet = await petsRepository.findOne(id);
+    try {
+      const pet = await petRepository.findOne(petId);
 
-    if (!pet) {
-      return response.status(404).json({ message: 'Pet not found' });
+      if (!pet) {
+        return res.status(404).send('Registration not found.');
+      }
+
+      await petRepository.remove(pet);
+
+      res.send('Registration successfully deleted!');
+    } catch (error) {
+      res.status(500).send('Error deleting registration.');
     }
-
-    pet.createdAt = new Date();
-    await petsRepository.save(pet);
-
-    return response.json({ message: 'Cadastro renovado por mais 60 dias' });
   },
 };

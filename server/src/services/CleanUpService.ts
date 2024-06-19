@@ -1,51 +1,41 @@
-import { getRepository, LessThanOrEqual } from 'typeorm';
+import { getRepository } from 'typeorm';
+import { sendMail } from './EmailService';
 import Pets from '../models/Pet';
-import EmailService from './EmailService';
-import { subDays } from 'date-fns';
 
-class CleanupService {
-  private interval: NodeJS.Timeout;
+export const cleanUpRecords = async () => {
+  const daysUntilDeletion = 60;
+  const daysUntilNotification = 55;
 
-  public start() {
-    this.interval = setInterval(async () => {
-      const petsRepository = getRepository(Pets);
+  const today = new Date();
+  const backendUrl = process.env.BACKEND_URL;
 
-      const now = new Date();
-      const warningDate = subDays(now, 55);
+  try {
+    const petRepository = getRepository(Pets);
+    const pets = await petRepository.find();
 
-      const petsToWarn = await petsRepository.find({
-        where: {
-          createdAt: LessThanOrEqual(warningDate),
-        },
-      });
+    for (const pet of pets) {
+      const daysSinceCreation = Math.floor(
+        (today.getTime() - pet.createdAt.getTime()) / (1000 * 60 * 60 * 24)
+      );
 
-      for (const pet of petsToWarn) {
-        const renewUrl = `${process.env.BACKEND_URL}/api/pets/renew/${pet.id}`;
-        const deleteUrl = `${process.env.BACKEND_URL}/api/pets/delete/${pet.id}`;
-        const message = `Seu cadastro será excluído em 5 dias. Para renovar por mais 60 dias, clique no link: ${renewUrl}.\nPara deletar o cadastro agora, clique no link: ${deleteUrl}`;
-        await EmailService.sendMail(
+      if (daysSinceCreation === daysUntilNotification) {
+        const renewUrl = `${backendUrl}/pets/renew/${pet.id}`;
+        const deleteUrl = `${backendUrl}/pets/delete/${pet.id}`;
+
+        await sendMail(
           pet.email,
-          'Aviso de Exclusão de Cadastro',
-          message
+          'Renew registration?',
+          `Your registration will be deleted in ${daysUntilDeletion} days. Do you want to renew?
+           <a href="${renewUrl}">Renew Registration</a> | <a href="${deleteUrl}">Delete Registration</a>`
         );
+      } else if (daysSinceCreation === daysUntilDeletion) {
+        await petRepository.remove(pet);
+        console.log(`Deleting pet with ID ${pet.id}`);
       }
+    }
 
-      const deleteDate = subDays(now, 60);
-      const petsToDelete = await petsRepository.find({
-        where: {
-          createdAt: LessThanOrEqual(deleteDate),
-        },
-      });
-
-      for (const pet of petsToDelete) {
-        await petsRepository.delete(pet.id);
-      }
-    }, 24 * 60 * 60 * 1000);
+    console.log('Record verification and deletion completed.');
+  } catch (error) {
+    console.error('Error executing verification and deletion:', error);
   }
-
-  public stop() {
-    clearInterval(this.interval);
-  }
-}
-
-export default new CleanupService();
+};
