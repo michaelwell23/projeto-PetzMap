@@ -16,8 +16,6 @@ const Landing = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const { city, state } = useLocation();
 
-  console.log(city, state);
-
   return (
     <div id='page-landing' className={isDarkMode ? 'dark-mode' : 'light-mode'}>
       <div className='content-wrapper'>

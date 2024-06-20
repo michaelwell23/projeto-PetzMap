@@ -56,6 +56,9 @@ export default class Pets {
   @CreateDateColumn()
   createdAt: Date;
 
+  @Column({ default: true })
+  active: boolean;
+
   @OneToMany(() => Image, (image) => image.pet, {
     cascade: ['insert', 'update'],
   })

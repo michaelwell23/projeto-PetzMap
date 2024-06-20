@@ -3,7 +3,9 @@ import { getRepository } from 'typeorm';
 import * as Yup from 'yup';
 
 import petsView from '../views/pets_view';
-import Pets from '../models/Pet';
+import Pet from '../models/Pet';
+
+import { sendMail } from '../services/EmailService';
 
 export default {
   async create(request: Request, response: Response) {
@@ -25,7 +27,7 @@ export default {
       createdAt,
     } = request.body;
 
-    const petsRepository = getRepository(Pets);
+    const petsRepository = getRepository(Pet);
     const requestImages = request.files as Express.Multer.File[];
 
     const images = requestImages.map((image) => {
@@ -95,7 +97,7 @@ export default {
   },
 
   async index(request: Request, response: Response) {
-    const petsRepository = getRepository(Pets);
+    const petsRepository = getRepository(Pet);
 
     const pets = await petsRepository.find({
       relations: ['images'],
@@ -107,7 +109,7 @@ export default {
   async show(request: Request, response: Response) {
     const { id } = request.params;
 
-    const petsRepository = getRepository(Pets);
+    const petsRepository = getRepository(Pet);
 
     const pet = await petsRepository.findOneOrFail(id, {
       relations: ['images'],
@@ -117,7 +119,7 @@ export default {
   },
 
   async renew(req: Request, res: Response) {
-    const petRepository = getRepository(Pets);
+    const petRepository = getRepository(Pet);
     const petId = req.params.id;
 
     try {
@@ -137,7 +139,7 @@ export default {
   },
 
   async delete(req: Request, res: Response) {
-    const petRepository = getRepository(Pets);
+    const petRepository = getRepository(Pet);
     const petId = req.params.id;
 
     try {
@@ -152,6 +154,66 @@ export default {
       res.send('Registration successfully deleted!');
     } catch (error) {
       res.status(500).send('Error deleting registration.');
+    }
+  },
+
+  async contactPetOwner(req: Request, res: Response) {
+    const { id } = req.params;
+    const petRepository = getRepository(Pet);
+
+    try {
+      const pet = await petRepository.findOne(id);
+
+      if (!pet) {
+        return res.status(404).json({ error: 'Pet não encontrado' });
+      }
+
+      const subject = 'A doação foi realizada?';
+      const html = `
+        <p>Olá, gostaríamos de saber se a doação do pet foi realizada.</p>
+        <p>
+          <a href="${process.env.APP_URL}/confirm-donation/${id}?confirmed=true">Sim</a>
+          <a href="${process.env.APP_URL}/confirm-donation/${id}?confirmed=false">Não</a>
+        </p>
+      `;
+
+      await sendMail(pet.email, subject, html);
+
+      // Marcar como inativo
+      pet.active = false;
+      await petRepository.save(pet);
+
+      res
+        .status(200)
+        .json({ message: 'E-mail enviado e pet marcado como inativo' });
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao processar solicitação' });
+    }
+  },
+
+  async confirmDonation(req: Request, res: Response) {
+    const { id } = req.params;
+    const { confirmed } = req.query;
+    const petRepository = getRepository(Pet);
+
+    try {
+      const pet = await petRepository.findOne(id);
+
+      if (!pet) {
+        return res.status(404).json({ error: 'Pet não encontrado' });
+      }
+
+      if (confirmed === 'true') {
+        pet.active = false;
+      } else {
+        pet.active = true;
+      }
+
+      await petRepository.save(pet);
+
+      res.status(200).send('<p>Status de doação atualizado com sucesso.</p>');
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao processar solicitação' });
     }
   },
 };

@@ -59,6 +59,15 @@ const Pet: React.FC = () => {
     return <p>Carregando...</p>;
   }
 
+  const handleContactClick = async () => {
+    try {
+      await api.post(`/pets/${params.id}/contact`);
+      alert('E-mail enviado com sucesso!');
+    } catch (error) {
+      alert('Erro ao enviar e-mail.');
+    }
+  };
+
   return (
     <>
       <div id='page-pet'>
@@ -165,7 +174,7 @@ const Pet: React.FC = () => {
                 <p>{pet.info_donation}</p>
               </div>
 
-              <PrimaryButton type='button'>
+              <PrimaryButton type='button' onClick={handleContactClick}>
                 {isDarkMode ? (
                   <FaWhatsapp size={25} color='rgba(0, 0, 0, 0.6)' />
                 ) : (
