@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Map, Marker, TileLayer } from 'react-leaflet';
+import { Marker } from 'react-leaflet';
 
 import { FaWhatsapp } from 'react-icons/fa';
 
 import PrimaryButton from 'components/PrimaryButton';
 import Sidebar from 'components/Sidebar';
+import Map from 'components/Map';
 
 import { useTheme } from 'context/ThemeContext';
 
@@ -44,7 +45,7 @@ const Pet: React.FC = () => {
 
   const params = useParams<PetParams>();
 
-  const [pet, setPet] = useState<PetData>();
+  const [pet, setPet] = useState<PetData | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const locationIcon = getLocationIcon(isDarkMode);
@@ -75,23 +76,21 @@ const Pet: React.FC = () => {
 
         <main>
           <div className='pet-details'>
-            <img src={pet.images[activeImageIndex].url} alt={pet.ad_title} />
+            {pet.images.length > 0 && (
+              <img src={pet.images[activeImageIndex].url} alt={pet.ad_title} />
+            )}
 
             <div className='images'>
-              {pet.images.map((image, index) => {
-                return (
-                  <button
-                    className={activeImageIndex === index ? 'active' : ''}
-                    type='button'
-                    key={image.id}
-                    onClick={() => {
-                      setActiveImageIndex(index);
-                    }}
-                  >
-                    <img src={image.url} alt={pet.name} />
-                  </button>
-                );
-              })}
+              {pet.images.map((image, index) => (
+                <button
+                  className={activeImageIndex === index ? 'active' : ''}
+                  type='button'
+                  key={image.id}
+                  onClick={() => setActiveImageIndex(index)}
+                >
+                  <img src={image.url} alt={pet.name} />
+                </button>
+              ))}
             </div>
 
             <div className='pet-details-content'>
@@ -141,13 +140,6 @@ const Pet: React.FC = () => {
                   scrollWheelZoom={false}
                   doubleClickZoom={false}
                 >
-                  <TileLayer
-                    url={`https://api.mapbox.com/styles/v1/mapbox/${
-                      isDarkMode ? 'navigation-preview-night-v4' : 'light-v10'
-                    }/tiles/256/{z}/{x}/{y}@2x?access_token=${
-                      process.env.REACT_APP_MAPBOX_TOKEN
-                    }`}
-                  />
                   <Marker
                     interactive={false}
                     icon={locationIcon}

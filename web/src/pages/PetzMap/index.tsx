@@ -40,6 +40,7 @@ interface Pets {
   latitude: number;
   longitude: number;
   images: Image[];
+  active: boolean;
 }
 
 const PetzMap = () => {
@@ -101,12 +102,16 @@ const PetzMap = () => {
       >
         {pets.map((pet) => {
           const petImage = pet.images.length > 0 ? pet.images[0].url : '';
+          const isActive = pet.active;
+
+          console.log(isActive);
 
           return (
             <Marker
               icon={locationIcon}
               position={[pet.latitude, pet.longitude]}
               key={pet.id}
+              opacity={isActive ? 1 : 0.5}
             >
               <Popup
                 closeButton={false}
@@ -114,18 +119,27 @@ const PetzMap = () => {
                 maxWidth={240}
                 className='map-popup'
               >
-                <img src={petImage} alt={pet.ad_title} />
+                {isActive ? (
+                  <>
+                    <img src={petImage} alt={pet.ad_title} />
 
-                <div className='info'>
-                  {pet.ad_title}
-                  <Link to={`/pet/${pet.id}`}>
-                    {isDarkMode ? (
-                      <FiArrowRight size={20} color='rgba(0, 0, 0, 0.6)' />
-                    ) : (
-                      <FiArrowRight size={20} color='rgba(225, 225, 255, 1)' />
-                    )}
-                  </Link>
-                </div>
+                    <div className={`info ${isActive ? '' : 'inactive'}`}>
+                      {pet.ad_title}
+                      <Link to={`/pet/${pet.id}`}>
+                        <FiArrowRight
+                          size={20}
+                          color={
+                            isDarkMode
+                              ? 'rgba(0, 0, 0, 0.6)'
+                              : 'rgba(225, 225, 255, 1)'
+                          }
+                        />
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  'Animal já doado'
+                )}
               </Popup>
             </Marker>
           );

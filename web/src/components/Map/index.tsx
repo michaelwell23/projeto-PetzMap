@@ -44,7 +44,7 @@ const Map = ({ children, interactive = true, onClick, ...props }: MapProps) => {
     >
       <TileLayer
         url={`https://api.mapbox.com/styles/v1/mapbox/${
-          isDarkMode ? 'dark-v10' : 'light-v10'
+          isDarkMode ? 'navigation-preview-night-v4' : 'light-v10'
         }/tiles/256/{z}/{x}/{y}@2x?access_token=${
           process.env.REACT_APP_MAPBOX_TOKEN
         }`}

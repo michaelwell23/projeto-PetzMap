@@ -162,12 +162,12 @@
   transition: background-color 0.2s;
 }
 
-body.dark-mode #page-map a.register-pet:hover {
-  color: rgba(225, 225, 255, 1);
-}
-
 #page-map {
   transition: background-color 0.5s, color 0.5s;
+}
+
+.info.inactive {
+  opacity: 0.5;
 }
 
 /* Modo Light */
@@ -228,4 +228,8 @@ body.dark-mode #page-map .map-popup .leaflet-popup-content {
 
 body.dark-mode #page-map .map-popup .leaflet-popup-content a {
   background: #ffd666;
+}
+
+body.dark-mode #page-map a.register-pet:hover {
+  color: rgba(225, 225, 255, 1);
 }

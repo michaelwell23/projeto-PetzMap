@@ -1,4 +1,4 @@
-import { Request, Response, request } from 'express';
+import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import * as Yup from 'yup';
 

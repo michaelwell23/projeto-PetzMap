@@ -19,6 +19,7 @@ export default {
       info_pet: pet.info_pet,
       info_donation: pet.info_donation,
       images: imagesView.renderMany(pet.images),
+      active: pet.active,
     };
   },
 
