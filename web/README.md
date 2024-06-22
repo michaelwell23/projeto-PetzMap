@@ -2,16 +2,37 @@
     <img alt="PetzMap" title="PetzMap" src="./src/assets/logo/logo-dark.png" width="500px" />
 </h1>
 
-<p>
-  PetzMap é um marketplace para doação de pets. Com ele você pode observar os diversos animais que estão disponibilizados na sua cidade. O sistema é bem simples de ser utilizado, basta fazer o cadastro do seu pet e esperar por um doador que entrará em contato. O sistema conta com a utilização de uma mapa o que deixa a aplicação divertida e mais interativa.
+---
+
+## Tecnologias
+
+[*] - Axios
+[*] - Leaflet
+[*] - Cron
+[*] - React Context
+[*] - TypeScript
+
+---
+
+### Light Mode
+
+<p align="center">
+  <img alt="Login" src="./public/template/light/light1.png" width="500px" /><br>
+  <img alt="Login" src="./public/template/light/light2.png" width="500px" /><br>
+  <img alt="Login" src="./public/template/light/light3.png" width="500px" /><br>
+  <img alt="Login" src="./public/template/light/light4.png" width="500px" /><br>
 </p>
 
 ---
 
+### Dark Mode
+
 <p align="center">
-  <img alt="Login" src="" width="500px" /><br>
-  <img alt="Login" src="" width="500px" /><br>
-  <img alt="Login" src="" width="500px" /><br>
+  <img alt="Login" src="./public/template/dark/dark1.png" width="500px" /><br>
+  <img alt="Login" src="./public/template/dark/dark2.png" width="500px" /><br>
+  <img alt="Login" src="./public/template/dark/dark3.png" width="500px" /><br>
+  <img alt="Login" src="./public/template/dark/dark4.png" width="500px" /><br>
+
 </p>
 
 ---

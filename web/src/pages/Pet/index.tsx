@@ -63,7 +63,10 @@ const Pet: React.FC = () => {
   const handleContactClick = async () => {
     try {
       await api.post(`/pets/${params.id}/contact`);
-      alert('E-mail enviado com sucesso!');
+
+      window.open(`https://wa.me/${pet.whatsapp}`, '_blank');
+
+      alert('Redirecionando para WhatsApp...');
     } catch (error) {
       alert('Erro ao enviar e-mail.');
     }

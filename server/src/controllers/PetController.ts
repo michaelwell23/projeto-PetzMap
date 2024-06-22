@@ -5,7 +5,10 @@ import * as Yup from 'yup';
 import petsView from '../views/pets_view';
 import Pet from '../models/Pet';
 
-import { sendMail } from '../services/EmailService';
+import {
+  sendDonationConfirmationEmail,
+  sendMail,
+} from '../services/EmailService';
 
 export default {
   async create(request: Request, response: Response) {
@@ -203,17 +206,49 @@ export default {
         return res.status(404).json({ error: 'Pet não encontrado' });
       }
 
+      // Se a confirmação não foi recebida, envia e-mail de confirmação
+      if (confirmed === undefined) {
+        await sendDonationConfirmationEmail(pet);
+        return res
+          .status(200)
+          .json({ message: 'Email de confirmação enviado com sucesso.' });
+      }
+
+      // Atualizar o status de doação apenas se houver confirmação explícita
       if (confirmed === 'true') {
-        pet.active = false;
-      } else {
-        pet.active = true;
+        pet.active = false; // Marca como inativo se confirmado
+      } else if (confirmed === 'false') {
+        pet.active = true; // Deixa ativo se a doação foi cancelada
       }
 
       await petRepository.save(pet);
-
-      res.status(200).send('<p>Status de doação atualizado com sucesso.</p>');
+      return res
+        .status(200)
+        .json({ message: 'Status de doação atualizado com sucesso.' });
     } catch (error) {
-      res.status(500).json({ error: 'Erro ao processar solicitação' });
+      return res.status(500).json({ error: 'Erro ao processar solicitação' });
+    }
+  },
+
+  async contact(req: Request, res: Response) {
+    const { id } = req.params;
+    const petRepository = getRepository(Pet);
+
+    try {
+      const pet = await petRepository.findOne(id);
+
+      if (!pet) {
+        return res.status(404).json({ error: 'Pet não encontrado' });
+      }
+
+      await sendDonationConfirmationEmail(pet);
+      return res
+        .status(200)
+        .json({ message: 'Email de contato enviado com sucesso.' });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ error: 'Erro ao enviar e-mail de contato.' });
     }
   },
 };
