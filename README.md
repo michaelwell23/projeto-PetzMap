@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="PetzMap" title="PatzMap" src="../web/src/assets/logo/logo-dark.png" width="800px" />
+  <img alt="PetzMap" title="PatzMap" src="https://raw.githubusercontent.com/michaelwell23/projeto-PetzMap/master/web/src/assets/logo/logo-dark.png" width="800px" />
 </h1>
 
 <p align="center">
